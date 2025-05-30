@@ -1,11 +1,13 @@
-import { Text } from "react-native";
+import { Header } from "@components/Header";
+import { View } from "react-native";
+import { Container } from "./styles";
 
 export function Groups() {
     
     return(
-        <>
-            <Text> Hello World </Text>
-        </>
+        <Container>
+            <Header />
+        </Container>
     )
 
 }
