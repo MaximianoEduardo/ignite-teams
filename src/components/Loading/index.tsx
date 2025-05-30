@@ -1,9 +1,19 @@
-import { Container, LoadIndicator } from "./styles";
+import theme from "@theme/index";
+import { StyleSheet, View, ActivityIndicator } from "react-native";
 
 export function Loading(){
     return (
-        <Container>
-            <LoadIndicator />
-        </Container>
+        <View style={styled.Container}>
+            <ActivityIndicator color={theme.COLORS.GREEN_700} />
+        </View>
     )
 }
+
+const styled = StyleSheet.create({
+    Container: {
+     flex: 1,
+     flexDirection: "row",
+     alignItems: "center",
+     backgroundColor: theme.COLORS.GRAY_600
+    }
+});

@@ -1,13 +1,23 @@
 import { Header } from "@components/Header";
-import { View } from "react-native";
-import { Container } from "./styles";
+import { StyleSheet, View } from "react-native";
+import theme from "@theme/index";
 
 export function Groups() {
     
     return(
-        <Container>
+        <View style={styled.Container}>
             <Header />
-        </Container>
+        </View>
     )
 
 }
+
+const styled = StyleSheet.create({
+
+    Container: {
+        flex: 1,
+        backgroundColor: theme.COLORS.GRAY_600,
+        padding: 24,
+    }
+
+});
