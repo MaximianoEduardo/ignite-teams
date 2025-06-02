@@ -1,17 +1,33 @@
 import { Header } from "@components/Header";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, FlatList } from "react-native";
 import theme from "@theme/index";
 import { Highlight } from "@components/Highlight";
 import { CardGroup } from "@components/CardGroup";
+import { useState } from "react";
+import { ListEmptyGroups } from "@components/ListEmpty";
 
 export function Groups() {
+
+
+    const [groups, setGroups] = useState<string[]>([]);
     
     return(
         <View style={styled.Container}>
             <Header />
             <Highlight title="Turmas" subtitle="jogue com sua turma"/>
 
-            <CardGroup title="Ignite" />
+            
+            <FlatList 
+                data={groups}
+                keyExtractor={item => item}
+                ListEmptyComponent={() => (
+                    <ListEmptyGroups message="Que tal cadastrar a primeira turma?"/>
+                )}
+                contentContainerStyle={groups.length === 0 && { flex: 1}}
+                renderItem={({item}) => (
+                    <CardGroup title={item} />
+                )}
+            />
 
         </View>
     )
