@@ -6,12 +6,15 @@ type ButtonTypedStyledProps = "PRIMARY" | "SECONDARY"
 type IProps = {
     type?: ButtonTypedStyledProps;
     title: string;
+    onPressfn: () => void;
 }
 
-export function Button ({type = "PRIMARY",title}: IProps){
+export function Button ({type = "PRIMARY",title, onPressfn}: IProps){
 
     return(
-        <TouchableOpacity style={
+        <TouchableOpacity 
+            onPress={onPressfn}
+            style={
             [{backgroundColor: type === "PRIMARY" ? theme.COLORS.GREEN_700 : theme.COLORS.RED}, 
             styled.container]}
         >
