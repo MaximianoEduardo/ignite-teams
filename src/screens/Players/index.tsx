@@ -1,11 +1,17 @@
-import { ButtonIcon } from "@components/ButtonIcon";
+import { Filter } from "@components/Filter";
 import { Header } from "@components/Header";
 import { Highlight } from "@components/Highlight";
 import { Input } from "@components/Input";
 import theme from "@theme/index";
-import { StyleSheet, View } from "react-native";
+import { useState } from "react";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 
 export function Players () {
+
+
+    const [team, setTeam] = useState<string>("Time A");
+    const [players, setPlayers] = useState([])
+
     return (
         <View style={styled.container}>
             <Header showBackButton />
@@ -25,7 +31,27 @@ export function Players () {
             </View>
 
             
+            <View style={styled.headerList}>
+                <FlatList 
+                
+                    data={["Time A", "Time B"]}
+                    keyExtractor={item => item}
+                    renderItem={({ item }) => (
+                        <Filter 
+                            title={item}
+                            isActive={item === team}
+                            onPressFn={() => setTeam(item)}
+                        />
+                    )}
+                    horizontal
+                />
+                <Text style={styled.numberOfPlayers}>
+                    {players.length}
+                </Text>
+            </View>
 
+            
+        
             
         </View>
     );
@@ -44,6 +70,19 @@ const styled = StyleSheet.create({
         borderRadius: 6,
         width: "100%",
         backgroundColor: theme.COLORS.GRAY_700
+    },
+    headerList: {
+        width: "100%",
+        flexDirection: "row",
+        alignItems: "center",
+        marginTop: 32,
+        marginBottom: 0,
+        marginHorizontal: 12
+    },
+    numberOfPlayers: {
+        color: theme.COLORS.GRAY_200,
+        fontFamily: theme.FONT_FAMILY.BOLD,
+        fontSize: theme.FONT_SIZE.SM
     }
 
 });
