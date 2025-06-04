@@ -5,6 +5,7 @@ import { Highlight } from "@components/Highlight";
 import { CardGroup } from "@components/CardGroup";
 import { useState } from "react";
 import { ListEmptyGroups } from "@components/ListEmpty";
+import { Button } from "@components/Button";
 
 export function Groups() {
 
@@ -27,6 +28,10 @@ export function Groups() {
                 renderItem={({item}) => (
                     <CardGroup title={item} />
                 )}
+            />
+
+            <Button
+                title="Criar nova turma"
             />
 
         </View>

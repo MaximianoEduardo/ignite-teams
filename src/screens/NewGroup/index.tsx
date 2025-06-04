@@ -1,6 +1,7 @@
 import { Button } from "@components/Button";
 import { Header } from "@components/Header";
 import { Highlight } from "@components/Highlight";
+import { Input } from "@components/Input";
 import theme from "@theme/index";
 import { UsersThree } from "phosphor-react-native";
 import { StyleSheet, View } from "react-native";
@@ -22,7 +23,9 @@ export function NewGroup() {
                     subtitle="crie a turma para adicionar as pessoas"
                 />
 
-                <Button 
+                <Input />
+
+                <Button
                     title="Criar"
                 />
             </View>

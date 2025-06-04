@@ -1,7 +1,10 @@
+import { Button } from "@components/Button";
 import { Filter } from "@components/Filter";
 import { Header } from "@components/Header";
 import { Highlight } from "@components/Highlight";
 import { Input } from "@components/Input";
+import { ListEmptyGroups } from "@components/ListEmpty";
+import { PlayerCard } from "@components/PlayerCard";
 import theme from "@theme/index";
 import { useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
@@ -10,7 +13,7 @@ export function Players () {
 
 
     const [team, setTeam] = useState<string>("Time A");
-    const [players, setPlayers] = useState([])
+    const [players, setPlayers] = useState(["Eduardo"])
 
     return (
         <View style={styled.container}>
@@ -51,7 +54,27 @@ export function Players () {
             </View>
 
             
+            <FlatList 
+                data={players}
+                keyExtractor={item => item}
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={[
+                    { paddingBottom: 100 },
+                    players.length === 0 && { flex: 1}
+                ]}
+                renderItem={({item}) => (
+                    <PlayerCard name={item} />
+                )}
+                ListEmptyComponent={() => (
+                    <ListEmptyGroups message="não há players nesse time" />
+                )}
+            />
         
+            
+            <Button
+                type="SECONDARY"
+                title="Remover Turma"
+            />
             
         </View>
     );
