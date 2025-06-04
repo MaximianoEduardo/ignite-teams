@@ -6,7 +6,8 @@ export type ButtonIconTypeStyleProps = "PRIMARY" | "SECONDARY";
 
 type IProps = {
     icon: keyof typeof MaterialIcons.glyphMap;
-    type?: ButtonIconTypeStyleProps
+    type?: ButtonIconTypeStyleProps;
+    onRemovefn?: () => void;
 }
 
 export function ButtonIcon ({type = "PRIMARY", icon}: IProps){
