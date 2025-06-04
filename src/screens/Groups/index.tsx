@@ -6,11 +6,22 @@ import { CardGroup } from "@components/CardGroup";
 import { useState } from "react";
 import { ListEmptyGroups } from "@components/ListEmpty";
 import { Button } from "@components/Button";
-import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-export function Groups() {
+type RootParamList = {
+    groups: undefined;
+    new: undefined;
+    players: {
+        group: string;
 
-    const navigation = useNavigation();
+    }
+}
+
+type IProps = {
+    navigation: NativeStackNavigationProp <RootParamList, "groups">;
+}
+
+export function Groups({ navigation }: IProps) {
 
     function handleNewGroup(){
         navigation.navigate("new")
