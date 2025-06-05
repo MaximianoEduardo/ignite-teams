@@ -32,7 +32,8 @@ const styled = StyleSheet.create({
         maxHeight: 56,
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 20
+        marginTop: 20,
+        borderRadius: 6,
     },
     title: {
         fontSize: theme.FONT_SIZE.MD,
