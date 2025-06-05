@@ -8,6 +8,7 @@ import { PlayerCard } from "@components/PlayerCard";
 import theme from "@theme/index";
 import { useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export function Players () {
 
@@ -16,7 +17,7 @@ export function Players () {
     const [players, setPlayers] = useState(["Eduardo"])
 
     return (
-        <View style={styled.container}>
+        <SafeAreaView style={styled.container}>
             <Header showBackButton />
 
             <Highlight 
@@ -71,12 +72,12 @@ export function Players () {
             />
         
             
-            <Button
+            {/* <Button
                 type="SECONDARY"
                 title="Remover Turma"
-            />
+            /> */}
             
-        </View>
+        </SafeAreaView>
     );
 }
 

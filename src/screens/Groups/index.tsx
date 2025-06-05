@@ -7,6 +7,7 @@ import { useState } from "react";
 import { ListEmptyGroups } from "@components/ListEmpty";
 import { Button } from "@components/Button";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type RootParamList = {
     groups: undefined;
@@ -30,7 +31,7 @@ export function Groups({ navigation }: IProps) {
     const [groups, setGroups] = useState<string[]>([]);
     
     return(
-        <View style={styled.Container}>
+        <SafeAreaView style={styled.Container}>
             <Header />
             <Highlight title="Turmas" subtitle="jogue com sua turma"/>
 
@@ -52,7 +53,7 @@ export function Groups({ navigation }: IProps) {
                 onPressfn={handleNewGroup}
             />
 
-        </View>
+        </SafeAreaView>
     )
 
 }

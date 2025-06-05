@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import theme from "@theme/index";
 import { UsersThree } from "phosphor-react-native";
 import { StyleSheet, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export function NewGroup() {
 
@@ -16,7 +17,7 @@ export function NewGroup() {
     }
 
     return(
-        <View style={styled.container}>
+        <SafeAreaView style={styled.container}>
             <Header  showBackButton />
             <View style={styled.content}>
 
@@ -37,7 +38,7 @@ export function NewGroup() {
                     title="Criar" 
                     onPressfn={() => handleNew() }/>
             </View>
-        </View> 
+        </SafeAreaView> 
     );
 }
 
