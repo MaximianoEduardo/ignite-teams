@@ -10,6 +10,7 @@ type IProps = {
     placeholderText: string;
     hasButton?: boolean;
     iconName?: keyof typeof MaterialIcons.glyphMap;
+    onchangefn?: any;
 }
 
 export function Input( props: IProps) {
@@ -20,6 +21,7 @@ export function Input( props: IProps) {
                 placeholder={props.placeholderText} 
                 style={styled.input}
                 placeholderTextColor={theme.COLORS.GRAY_300}
+                onChangeText={props.onchangefn}
             />
             {
                 props.iconName && <ButtonIcon icon={props.iconName} />
@@ -41,6 +43,8 @@ const styled = StyleSheet.create({
         fontFamily: theme.FONT_FAMILY.REGULAR,
         fontSize: theme.FONT_SIZE.MD,
         flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
         minHeight: 56,
         maxHeight: 56,
         borderRadius: 6,
