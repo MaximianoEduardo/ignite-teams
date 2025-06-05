@@ -5,6 +5,7 @@ import { Input } from "@components/Input";
 import { useNavigation } from "@react-navigation/native";
 import theme from "@theme/index";
 import { UsersThree } from "phosphor-react-native";
+import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -12,8 +13,11 @@ export function NewGroup() {
 
     const navigation = useNavigation();
 
+
+    const [group, setGroup] = useState<string>("");
+
     function handleNew(){
-        navigation.navigate("players", { group: "grupo"})
+        navigation.navigate("players", { group })
     }
 
     return(
@@ -31,7 +35,9 @@ export function NewGroup() {
                     subtitle="crie a turma para adicionar as pessoas"
                 />
 
-                <Input placeholderText={"Nome da turma"} />
+                <Input
+                    onchangefn={setGroup}
+                    placeholderText={"Nome da turma"} />
 
                 <Button
                 

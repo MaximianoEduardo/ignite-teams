@@ -5,23 +5,32 @@ import { Highlight } from "@components/Highlight";
 import { Input } from "@components/Input";
 import { ListEmptyGroups } from "@components/ListEmpty";
 import { PlayerCard } from "@components/PlayerCard";
+import { useRoute } from "@react-navigation/native";
 import theme from "@theme/index";
 import { useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+type RouteParams = {
+    group: string;
+}
+
 export function Players () {
 
 
     const [team, setTeam] = useState<string>("Time A");
-    const [players, setPlayers] = useState(["Eduardo"])
+    const [players, setPlayers] = useState(["Eduardo"]);
+
+    const route = useRoute();
+
+    const { group } = route.params as RouteParams;
 
     return (
         <SafeAreaView style={styled.container}>
             <Header showBackButton />
 
             <Highlight 
-                title="Nome da turma"
+                title={group}
                 subtitle="adicionar a galera e separe os times"
             />
 
@@ -90,6 +99,7 @@ const styled = StyleSheet.create({
     },
     form: {
         flexDirection: "row",
+        alignItems: "center",
         justifyContent: "center",
         borderRadius: 6,
         width: "100%",
