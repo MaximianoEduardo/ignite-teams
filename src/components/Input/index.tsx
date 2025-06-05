@@ -9,7 +9,7 @@ type IProps = {
     children?: React.JSX.Element;
     placeholderText: string;
     hasButton?: boolean;
-    iconName: keyof typeof MaterialIcons.glyphMap;
+    iconName?: keyof typeof MaterialIcons.glyphMap;
 }
 
 export function Input( props: IProps) {
@@ -18,10 +18,12 @@ export function Input( props: IProps) {
             <TextInput
                 autoCorrect={false}
                 placeholder={props.placeholderText} 
-                style={styled.container}
+                style={styled.input}
                 placeholderTextColor={theme.COLORS.GRAY_300}
             />
-            <ButtonIcon icon={props.iconName} />
+            {
+                props.iconName && <ButtonIcon icon={props.iconName} />
+            }
         </View>
         
     );
@@ -30,11 +32,8 @@ export function Input( props: IProps) {
 const styled = StyleSheet.create({
 
     container: {
-        flex: 1,
         justifyContent: "center",
         flexDirection: "row",
-        alignItems: "center",
-        padding: 16
     },
     input:{
         backgroundColor: theme.COLORS.GRAY_700,
@@ -45,5 +44,6 @@ const styled = StyleSheet.create({
         minHeight: 56,
         maxHeight: 56,
         borderRadius: 6,
+        paddingLeft: 16
     }
 });
