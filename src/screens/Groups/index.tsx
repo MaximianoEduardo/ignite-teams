@@ -3,11 +3,13 @@ import { StyleSheet, View, FlatList } from "react-native";
 import theme from "@theme/index";
 import { Highlight } from "@components/Highlight";
 import { CardGroup } from "@components/CardGroup";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ListEmptyGroups } from "@components/ListEmpty";
 import { Button } from "@components/Button";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { GroupsGetAll } from "@storage/group/groupsGetAll";
+import { useFocusEffect } from "@react-navigation/native";
 
 type RootParamList = {
     groups: undefined;
@@ -24,11 +26,28 @@ type IProps = {
 
 export function Groups({ navigation }: IProps) {
 
+    const [groups, setGroups] = useState<string[]>([]);
+
     function handleNewGroup(){
         navigation.navigate("new")
     }
 
-    const [groups, setGroups] = useState<string[]>([]);
+    async function fetchGroups(){
+        try {
+            const data = await GroupsGetAll();
+
+            setGroups(data);
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+
+    useFocusEffect(useCallback(() => {
+
+        fetchGroups();
+
+    }, []));
     
     return(
         <SafeAreaView style={styled.Container}>

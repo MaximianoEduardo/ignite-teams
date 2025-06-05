@@ -3,6 +3,7 @@ import { Header } from "@components/Header";
 import { Highlight } from "@components/Highlight";
 import { Input } from "@components/Input";
 import { useNavigation } from "@react-navigation/native";
+import { GroupCreate } from "@storage/group/groupCreate";
 import theme from "@theme/index";
 import { UsersThree } from "phosphor-react-native";
 import { useState } from "react";
@@ -16,7 +17,13 @@ export function NewGroup() {
 
     const [group, setGroup] = useState<string>("");
 
-    function handleNew(){
+    async function handleNew(){
+        try {    
+            await GroupCreate(group);
+        } catch (error) {
+            console.error(error)
+        }
+        
         navigation.navigate("players", { group })
     }
 
