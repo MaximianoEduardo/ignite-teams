@@ -42,6 +42,11 @@ export function Groups({ navigation }: IProps) {
         }
     }
 
+    function handleOpenGroups(group: string){
+        console.log(`chamou`)
+        navigation.navigate(`players`, { group });
+    }
+
 
     useFocusEffect(useCallback(() => {
 
@@ -63,7 +68,7 @@ export function Groups({ navigation }: IProps) {
                 )}
                 contentContainerStyle={groups.length === 0 && { flex: 1}}
                 renderItem={({item}) => (
-                    <CardGroup title={item} />
+                    <CardGroup onPressfn={() => handleOpenGroups(item)} title={item} />
                 )}
             />
 

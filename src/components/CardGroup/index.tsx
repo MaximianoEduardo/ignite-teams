@@ -5,11 +5,14 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 type IProps = {
     title: string;
+    onPressfn: (group: string) => void;
 }
 
 export function CardGroup(props : IProps) {
     return (
-        <TouchableOpacity style={styled.container}>
+        <TouchableOpacity 
+            onPress={() =>props.onPressfn(props.title)}
+            style={styled.container}>
             <UsersThree weight="fill"
               size={32} 
               style={{marginRight: 20}} 
