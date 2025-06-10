@@ -5,7 +5,7 @@ import { ButtonIcon } from "@components/ButtonIcon";
 
 type IProps = {
     name: string;
-    onRemove?: () => void;
+    onRemovefn?: () => void;
 }
 
 export function PlayerCard(props: IProps){
@@ -21,7 +21,7 @@ export function PlayerCard(props: IProps){
                 {props.name}
             </Text>
 
-            <ButtonIcon onRemovefn={props.onRemove} icon="close" type="SECONDARY"/>
+            <ButtonIcon onRemovefn={props.onRemovefn} icon="close" type="SECONDARY"/>
         </View>
     );
 }

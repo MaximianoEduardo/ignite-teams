@@ -1,7 +1,6 @@
 import theme from "@theme/index";
 import { StyleSheet, TextInput, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { AddressBook } from "phosphor-react-native";
 import { ButtonIcon } from "@components/ButtonIcon";
 
 
@@ -11,20 +10,30 @@ type IProps = {
     hasButton?: boolean;
     iconName?: keyof typeof MaterialIcons.glyphMap;
     onchangefn?: any;
+    onpressfn?: () => void;
+    valueprop?: string;
+    inputRef?: React.RefObject<TextInput | null>;
 }
 
+
 export function Input( props: IProps) {
+
+
     return(
         <View style={styled.container}>
             <TextInput
+                ref={props.inputRef}
+                value={props.valueprop}
                 autoCorrect={false}
                 placeholder={props.placeholderText} 
                 style={styled.input}
                 placeholderTextColor={theme.COLORS.GRAY_300}
                 onChangeText={props.onchangefn}
+                onSubmitEditing={props.onpressfn}
+                returnKeyType="done"
             />
             {
-                props.iconName && <ButtonIcon icon={props.iconName} />
+                props.iconName && <ButtonIcon onpressfn={props.onpressfn} icon={props.iconName} />
             }
         </View>
         

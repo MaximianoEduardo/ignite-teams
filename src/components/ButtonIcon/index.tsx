@@ -8,12 +8,16 @@ type IProps = {
     icon: keyof typeof MaterialIcons.glyphMap;
     type?: ButtonIconTypeStyleProps;
     onRemovefn?: () => void;
+    onpressfn?: () => void;
+    
 }
 
-export function ButtonIcon ({type = "PRIMARY", icon}: IProps){
+export function ButtonIcon ({type = "PRIMARY", icon, onpressfn}: IProps){
 
     return (
-        <TouchableOpacity style={styled.container}>
+        <TouchableOpacity 
+            onPress={onpressfn}
+            style={styled.container}>
             <MaterialIcons 
                 name={icon}
                 color={type === "PRIMARY" ? theme.COLORS.GREEN_700 : theme.COLORS.RED}

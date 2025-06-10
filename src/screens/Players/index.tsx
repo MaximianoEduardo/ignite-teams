@@ -6,9 +6,15 @@ import { Input } from "@components/Input";
 import { ListEmptyGroups } from "@components/ListEmpty";
 import { PlayerCard } from "@components/PlayerCard";
 import { useRoute } from "@react-navigation/native";
+import { playerAddByGroup } from "@storage/player/playerAddByGroup";
+import { playerRemoveByGroup } from "@storage/player/playerRemoveByGroup";
+import { playersGetByGroup } from "@storage/player/playersGetByGroup";
+import { playersGetByGroupTeam } from "@storage/player/playersGetByGroupAndTeams";
+import { PlayerStorageDTO } from "@storage/player/PlayerStorage.dto";
 import theme from "@theme/index";
-import { useState } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { AppError } from "@utils/AppError";
+import { useEffect, useRef, useState } from "react";
+import { Alert, FlatList, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 type RouteParams = {
@@ -17,13 +23,76 @@ type RouteParams = {
 
 export function Players () {
 
-
+    const [newPlayername, setNewPLayerName] = useState("");
     const [team, setTeam] = useState<string>("Time A");
-    const [players, setPlayers] = useState(["Eduardo"]);
+    const [players, setPlayers] = useState<PlayerStorageDTO[]>([]);
 
     const route = useRoute();
 
     const { group } = route.params as RouteParams;
+    const newPlayerNameInputRef = useRef<TextInput>(null);
+
+
+    async function handleAddPlayer() {
+        if(newPlayername.trim().length === 0){
+            return Alert.alert("Novo Jogador(a)", "Informe o nome da pessoa para adicionar")
+        }
+
+        const newPlayer = {
+            name: newPlayername,
+            team
+        }
+
+        try {
+            
+            await playerAddByGroup(newPlayer, group);
+
+            newPlayerNameInputRef.current?.blur();
+
+            setNewPLayerName("");
+            fetchPlayerByTeam();
+
+        } catch (error) {
+            if(error instanceof AppError){
+                Alert.alert("Nova Pessoa", error.message)
+            } else {
+                console.error(error);
+                Alert.alert("Nova Pessoa", "Não foi possivel adicionar")
+            }
+        }
+
+        
+    }
+
+
+    async function fetchPlayerByTeam(){
+        try {
+            const playersByTeam = await playersGetByGroupTeam(group, team);
+
+            setPlayers(playersByTeam);
+        } catch(error){
+            console.error("Jogadores", "Não foi possivel carregar as pessoas do time selecionado.")
+        }
+    }
+
+
+    async function handlePlayerRemove(playerName: string) {
+        try {
+            
+            await playerRemoveByGroup(playerName, group);
+            fetchPlayerByTeam();
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+
+    useEffect(() => {
+
+        fetchPlayerByTeam()
+    
+    }, [team]);
 
     return (
         <SafeAreaView style={styled.container}>
@@ -35,7 +104,11 @@ export function Players () {
             />
 
             <View style={styled.form}>
-                <Input 
+                <Input
+                    valueprop={newPlayername}
+                    onchangefn={setNewPLayerName}
+                    onpressfn={handleAddPlayer}
+                    inputRef={newPlayerNameInputRef}
                     hasButton
                     iconName="add"
                     placeholderText="Nome da pessoa">
@@ -66,14 +139,14 @@ export function Players () {
             
             <FlatList 
                 data={players}
-                keyExtractor={item => item}
+                keyExtractor={item => item.name}
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={[
                     { paddingBottom: 100 },
                     players.length === 0 && { flex: 1}
                 ]}
                 renderItem={({item}) => (
-                    <PlayerCard name={item} />
+                    <PlayerCard onRemovefn={handlePlayerRemove(item.name)} name={item.name} />
                 )}
                 ListEmptyComponent={() => (
                     <ListEmptyGroups message="não há players nesse time" />
@@ -81,10 +154,11 @@ export function Players () {
             />
         
             
-            {/* <Button
+            <Button
                 type="SECONDARY"
                 title="Remover Turma"
-            /> */}
+                onPressfn={() => {}}
+            />
             
         </SafeAreaView>
     );
