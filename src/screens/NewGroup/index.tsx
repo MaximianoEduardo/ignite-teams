@@ -5,9 +5,10 @@ import { Input } from "@components/Input";
 import { useNavigation } from "@react-navigation/native";
 import { GroupCreate } from "@storage/group/groupCreate";
 import theme from "@theme/index";
+import { AppError } from "@utils/AppError";
 import { UsersThree } from "phosphor-react-native";
 import { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export function NewGroup() {
@@ -18,13 +19,24 @@ export function NewGroup() {
     const [group, setGroup] = useState<string>("");
 
     async function handleNew(){
+
+        if(group.trim().length === 0) {
+            return Alert.alert(`Novo Group`, `Informe o nome da turma`);
+        }
+
         try {    
             await GroupCreate(group);
+            navigation.navigate("players", { group })
         } catch (error) {
-            console.error(error)
+            if(error instanceof AppError) {
+                Alert.alert(`Novo Group`, error.message);
+            } else  {
+                Alert.alert(`Novo Group`, `Não foi possivel criar um novo grupo`);
+                console.error(error);
+            }
+            
         }
-        
-        navigation.navigate("players", { group })
+
     }
 
     return(
